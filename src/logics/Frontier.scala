@@ -1,5 +1,0 @@
-package logics
-
-class Frontier {
-
-}
