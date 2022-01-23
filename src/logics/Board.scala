@@ -11,7 +11,7 @@ class Board (val n: Int, val m: Int, val goal: Coordinate) {
 
   def depth: Int = m
 
-  def validMove(coordinate: Coordinate): Boolean = {
+  def stepFrom(coordinate: Coordinate, step: Int): Coordinate = {
 
   }
 

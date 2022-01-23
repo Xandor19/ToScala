@@ -1,17 +1,31 @@
 package logics
 
-class Walk (val robots: List[Robot], val board: Board) {
-  private var walkers = robots
+import scala.collection.mutable
+
+class Walk (val start: Coordinate, val board: Board) {
+  private val family = new Array[Robot](10)
+  private val byFitness = new mutable.Queue[Robot]()
+  private val notToGoal = new Array[Robot](10)
+  private val rounds = new Array[RoundData](50)
+  private var currentRound = 0
 
   def round: Unit = {
 
   }
 
-  def generateSteps: Array[String] = {
+  def sortFitness: Unit = {
 
   }
 
-  def mergeSteps(list1: Array[String], list2: Array[String]): Array[String] = {
+  def roundStatistics: Unit = {
+
+  }
+
+  def generateSteps: Array[Int] = {
+
+  }
+
+  def mergeSteps(list1: Array[Int], list2: Array[Int]): Array[Int] = {
 
   }
 }
