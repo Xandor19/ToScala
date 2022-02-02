@@ -15,4 +15,5 @@ class Coordinate (val x: Int, val y: Int) {
    *         False otherwise
    */
   def isSame(other: Coordinate): Boolean = other.x == x && other.y == y
+  def isSame(_x: Int, _y: Int): Boolean = _x == x && _y == y
 }

@@ -26,6 +26,11 @@ class Walk (val start: Coordinate, val board: Board) {
   }
 
   /**
+   * Calls the show method on the board objecto to print itself displaying its state
+   */
+  def printBoard(): Unit = board.show();
+
+  /**
    * Function to send the current generation to a full walk
    */
   def round(): Unit = {
@@ -41,7 +46,7 @@ class Walk (val start: Coordinate, val board: Board) {
         //Tells current robot to make its next step
         r.nextStep(board)
 
-        //Checks wetter the robot got to the goal or ran out of steps
+        //Checks whether the robot got to the goal or ran out of steps
         if (board.gotToGoal(r.position)) byFitness.enqueue(r)
         else if (!r.canMove) notToGoal = notToGoal.appended(r)
       })
@@ -54,7 +59,7 @@ class Walk (val start: Coordinate, val board: Board) {
    * relative to the goal
    */
   def sortFitness(): Unit = {
-
+    notToGoal = notToGoal.sortWith((r1: Robot, r2: Robot) => board.distanceToGoal(r1.position) < board.distanceToGoal(r2.position));
   }
 
   /**
@@ -62,9 +67,9 @@ class Walk (val start: Coordinate, val board: Board) {
    * of the current generation's walk
    * @return A RoundData object containing the required info
    */
-  def roundStatistics: RoundData = {
-
-  }
+//  def roundStatistics(): RoundData = {
+//
+//  }
 
   /**
    * Generates a random list of steps for a 1st generation
