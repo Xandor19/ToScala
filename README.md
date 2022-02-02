@@ -3,5 +3,5 @@
 Repo for Scala project
 
 Version:
-scala 2.11.12
+scala 2.13.17
 .idea project
