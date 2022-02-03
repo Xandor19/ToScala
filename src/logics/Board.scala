@@ -117,10 +117,12 @@ class Board (val n: Int, val m: Int, val start: Coordinate, val goal: Coordinate
    * Shows the board in a grid shape
    */
   def show(): Unit = {
-    for(i <- 0 until m){
-      println("-" * (4 * n + 1))
+    for (i <- 0 until m) {
       var row = ""
-      for(j <- 0 until n){
+      
+      println("-" * (4 * n + 1))
+
+      for (j <- 0 until n) {
         row += s"| ${getTokenForCoordinate(j, i)} "
       }
       row += "|"
@@ -134,10 +136,10 @@ class Board (val n: Int, val m: Int, val start: Coordinate, val goal: Coordinate
    * Given a coordinate, it returns its corresponding token
    */
   def getTokenForCoordinate(n: Int, m: Int): String = {
-    if(start.isSame(n, m)) Board.tokens("start")
-    else if(goal.isSame(n, m)) Board.tokens("goal")
-    else{
-      if(board(m)(n)) Board.tokens("active")
+    if (start.isSame(n, m)) Board.tokens("start")
+    else if (goal.isSame(n, m)) Board.tokens("goal")
+    else {
+      if (board(m)(n)) Board.tokens("active")
       else Board.tokens("inactive")
     }
   }

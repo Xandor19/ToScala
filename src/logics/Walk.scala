@@ -26,7 +26,7 @@ class Walk (val start: Coordinate, val board: Board) {
   }
 
   /**
-   * Calls the show method on the board objecto to print itself displaying its state
+   * Calls the show method on the board object to print itself displaying its state
    */
   def printBoard(): Unit = board.show();
 
