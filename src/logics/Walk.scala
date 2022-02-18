@@ -8,8 +8,8 @@ import scala.util.Random
  * @param start The position from which the robots will start
  * @param board The board in which the walks will be made
  */
-class Walk (val start: Coordinate, val board: Board) {
-  private val family = new Array[Robot](10)
+class Walk (val famSize: Int, val start: Coordinate, val board: Board) {
+  private var family = new Array[Robot](famSize)
   private val byFitness = new mutable.Queue[Robot]()
   private var notToGoal = List.empty[Robot]
   private val rounds = new Array[RoundData](50)
@@ -19,7 +19,7 @@ class Walk (val start: Coordinate, val board: Board) {
    * Creates a 1st generation robot family with random steps
    */
   def createFamily(): Unit = {
-    for (i <- 0 until 10) {
+    for (i <- 0 until famSize) {
       //Initializes current robot with a randomly generated step list
       family(i) = new Robot(start, generateSteps())
     }
@@ -51,7 +51,6 @@ class Walk (val start: Coordinate, val board: Board) {
         else if (!r.canMove) notToGoal = notToGoal.appended(r)
       })
     }
-    //TODO end of round and fitness calculation
   }
 
   /**
@@ -60,6 +59,24 @@ class Walk (val start: Coordinate, val board: Board) {
    */
   def sortFitness(): Unit = {
     notToGoal = notToGoal.sortWith((r1: Robot, r2: Robot) => board.distanceToGoal(r1.position) < board.distanceToGoal(r2.position));
+  }
+
+  /**
+   * Function to go one generation forward after a walk is finished
+   * The current generation has to be sorted by fitness
+   * (sortFitness() function)
+   * Should be used after roundStatistics as it replaces the data
+   * structures with the results of the walk
+   */
+  def generationIn(): Unit = {
+    notToGoal.foreach(r => byFitness.enqueue(r))
+
+    family = byFitness.toArray
+
+    family(famSize - 1) = new Robot(start, mergeSteps(family(0).steps, family(1).steps))
+    family(famSize - 2) = new Robot(start, mergeSteps(family(1).steps, family(2).steps))
+    family(famSize - 3) = new Robot(start, mergeSteps(family(2).steps, family(3).steps))
+    family(famSize - 4) = new Robot(start, mergeSteps(family(3).steps, family(0).steps))
   }
 
   /**
@@ -76,10 +93,10 @@ class Walk (val start: Coordinate, val board: Board) {
    * robot
    * @return An array with the resulting step list
    */
-  def generateSteps(): Array[Int] = {
+  def generateSteps(): Array[String] = {
     val moves = Array(Step.left, Step.right, Step.up, Step.down)
     val stepsAmount: Int = (board.width * board.depth) / 2
-    val steps = new Array[Int](stepsAmount)
+    val steps = new Array[String](stepsAmount)
 
     //Generates the steps list with the board defined size
     for (i <- 0 until stepsAmount) {
@@ -96,9 +113,9 @@ class Walk (val start: Coordinate, val board: Board) {
    * @param list2 Steps list of robot 2
    * @return
    */
-  def mergeSteps(list1: Array[Int], list2: Array[Int]): Array[Int] = {
+  def mergeSteps(list1: Array[String], list2: Array[String]): Array[String] = {
     val l = list1.length
-    val newList = new Array[Int](l)
+    val newList = new Array[String](l)
 
     for (i <- 0 until l) {
       //Randomly picks a step from one of the two lists at a time

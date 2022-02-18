@@ -61,7 +61,7 @@ class Board (val n: Int, val m: Int, val start: Coordinate, val goal: Coordinate
    * @return A Coordinate object with the new position or the original
    *         one if no step was given
    */
-  def stepFrom(coordinate: Coordinate, step: Int): Coordinate = {
+  def stepFrom(coordinate: Coordinate, step: String): Coordinate = {
     //Creates new possible position from the original and the given step
     val newCoordinate = if (step == Step.down) new Coordinate(coordinate.x, coordinate.y - 1)
     else if (step == Step.up) new Coordinate(coordinate.x, coordinate.y + 1)
@@ -73,8 +73,8 @@ class Board (val n: Int, val m: Int, val start: Coordinate, val goal: Coordinate
     try {
       //Checks if the destination tile is active
       if (board(newCoordinate.x)(newCoordinate.y)) {
-        //Valid move, the new full tile is deactivated and the released one activated
-        board(newCoordinate.x)(newCoordinate.y) = false
+        //Valid move, the new full tile is deactivated if is not the goal and the released one activated
+        board(newCoordinate.x)(newCoordinate.y) = gotToGoal(newCoordinate)
         board(coordinate.x)(coordinate.y) = true
         newCoordinate
       }
@@ -109,8 +109,8 @@ class Board (val n: Int, val m: Int, val start: Coordinate, val goal: Coordinate
   /**
    * Return amount of inactive cells
    */
-  def getInactiveAmount(): Int = {
-    board.map(row => row.filterNot(cell => cell).length).reduce(_+_)
+  def getInactiveAmount: Int = {
+    board.map(row => row.filterNot(cell => cell).length).sum
   }
 
   /**
@@ -138,9 +138,7 @@ class Board (val n: Int, val m: Int, val start: Coordinate, val goal: Coordinate
   def getTokenForCoordinate(n: Int, m: Int): String = {
     if (start.isSame(n, m)) Board.tokens("start")
     else if (goal.isSame(n, m)) Board.tokens("goal")
-    else {
-      if (board(m)(n)) Board.tokens("active")
-      else Board.tokens("inactive")
-    }
+    else if (board(m)(n)) Board.tokens("active")
+    else Board.tokens("inactive")
   }
 }
