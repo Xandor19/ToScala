@@ -69,14 +69,17 @@ class Walk (val famSize: Int, val start: Coordinate, val board: Board) {
    * structures with the results of the walk
    */
   def generationIn(): Unit = {
+    //Adds each of the robots that didn't got to the goal to the fitness queue
     notToGoal.foreach(r => byFitness.enqueue(r))
 
-    family = byFitness.toArray
+    //Replaces old generation with a copy of themselves ready for a new walk
+    family = byFitness.toArray.map(r => r.grow())
 
-    family(famSize - 1) = new Robot(start, mergeSteps(family(0).steps, family(1).steps))
-    family(famSize - 2) = new Robot(start, mergeSteps(family(1).steps, family(2).steps))
-    family(famSize - 3) = new Robot(start, mergeSteps(family(2).steps, family(3).steps))
-    family(famSize - 4) = new Robot(start, mergeSteps(family(3).steps, family(0).steps))
+    //Replaces this walk last robot's steps list with the corresponding merge of the bests robots
+    family(famSize - 1).steps = mergeSteps(family(0).steps, family(1).steps)
+    family(famSize - 2).steps = mergeSteps(family(1).steps, family(2).steps)
+    family(famSize - 3).steps = mergeSteps(family(2).steps, family(3).steps)
+    family(famSize - 4).steps = mergeSteps(family(3).steps, family(0).steps)
   }
 
   /**

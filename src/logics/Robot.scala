@@ -5,10 +5,10 @@ package logics
  * @param initial The initial position of the robot
  * @param steps The list of steps that the robot will perform
  */
-class Robot (initial: Coordinate, val steps: Array[String]) {
+class Robot (initial: Coordinate, var steps: Array[String]) {
   private var stepCount = 0
   private var current = initial
-  private val visited = new Array[Coordinate](steps.length)
+  private var visited = new Array[Coordinate](steps.length)
 
   /**
    * Gives the total amount of steps given by
@@ -65,5 +65,13 @@ class Robot (initial: Coordinate, val steps: Array[String]) {
 
     //Robot's steps count is updated
     stepCount += 1
+  }
+
+  /**
+   * Returns a "growth" copy of this robot, namely,
+   * a robot with the same steps ready to a new walk
+   */
+  def grow(): Robot = {
+    new Robot(initial, steps)
   }
 }
