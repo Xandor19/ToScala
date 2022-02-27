@@ -1,6 +1,7 @@
 package logics
 
 import scala.util.Random
+import scala.collection.mutable
 
 object Board{
   private val tokens = Map(
@@ -14,15 +15,16 @@ object Board{
 
 /**
  * Class to represent a board for the walks
- * @param n Board's width
  * @param m Board's depth
+ * @param n Board's width
  * @param start Coordinates of the starting point
  * @param goal Coordinates of the goal
  */
-class Board (val n: Int, val m: Int, val start: Coordinate, val goal: Coordinate) {
+class Board (val m: Int, val n: Int, val start: Coordinate, val goal: Coordinate) {
   //m is depth (rows amount)
   //n is width (columns amount)
   private val board = Array.ofDim[Boolean](m, n)
+  private val robotOccupiedCells = new mutable.ArrayBuffer[Coordinate]()
 
   /**
    * Initializes this board, activating tiles
@@ -76,6 +78,10 @@ class Board (val n: Int, val m: Int, val start: Coordinate, val goal: Coordinate
         //Valid move, the new full tile is deactivated if is not the goal and the released one activated
         board(newCoordinate.x)(newCoordinate.y) = gotToGoal(newCoordinate)
         board(coordinate.x)(coordinate.y) = true
+
+        if(!coordinate.isSame(start)) robotOccupiedCells -= coordinate
+        if(!newCoordinate.isSame(start) && !newCoordinate.isSame(goal)) robotOccupiedCells += newCoordinate
+
         newCoordinate
       }
       //Invalid move
@@ -138,6 +144,7 @@ class Board (val n: Int, val m: Int, val start: Coordinate, val goal: Coordinate
   def getTokenForCoordinate(n: Int, m: Int): String = {
     if (start.isSame(n, m)) Board.tokens("start")
     else if (goal.isSame(n, m)) Board.tokens("goal")
+    else if (robotOccupiedCells.exists(_.isSame(new Coordinate(n, m)))) Board.tokens("robot")
     else if (board(m)(n)) Board.tokens("active")
     else Board.tokens("inactive")
   }

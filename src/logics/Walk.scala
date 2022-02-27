@@ -12,8 +12,9 @@ class Walk (val famSize: Int, val start: Coordinate, val board: Board) {
   private var family = new Array[Robot](famSize)
   private val byFitness = new mutable.Queue[Robot]()
   private var notToGoal = List.empty[Robot]
-  private val rounds = new Array[RoundData](50)
+  private val roundStatistics = new Array[RoundData](50)
   private var currentRound = 0
+  private var gotToGoalCounter = 0
 
   /**
    * Creates a 1st generation robot family with random steps
@@ -31,9 +32,41 @@ class Walk (val famSize: Int, val start: Coordinate, val board: Board) {
   def printBoard(): Unit = board.show();
 
   /**
-   * Function to send the current generation to a full walk
+   * Organizes all processes that happen in a round
    */
   def round(): Unit = {
+    //Make all robots walk one step
+    launchWalk()
+    //Sort robots according to their position
+    sortFitness()
+    //Collect data from the walk
+    calculateRoundStatistics()
+    //Accommodate robots for next round
+    generationIn()
+    //Increase round number
+    gotToGoalCounter = 0
+    currentRound += 1
+  }
+
+  /**
+   * Gives account of the current state
+   * - Provides statistics
+   * - Prints the board
+   */
+  def showCurrentState(): Unit = {
+    print(s"Current round: $currentRound\n")
+    print(s"$gotToGoalCounter robots got to goal\n")
+    print(s"The closest a robot was to goal was ${board.distanceToGoal(roundStatistics(currentRound-1).bestPath.last)}\n")
+//    Bug on calculating mean
+//    print(s"The robots took ${roundStatistics(currentRound-1).stepsMean} steps on average out of ${board.m * board.n / 2}\n")
+    print(s"Best walk was: ${roundStatistics(currentRound-1).bestStepsSequence.mkString(", ")}\n")
+    printBoard()
+  }
+
+  /**
+   * Function to send the current generation to a full walk
+   */
+  def launchWalk(): Unit = {
     var canWalk = family
 
     //Loops while there are robots able to walk
@@ -47,18 +80,24 @@ class Walk (val famSize: Int, val start: Coordinate, val board: Board) {
         r.nextStep(board)
 
         //Checks whether the robot got to the goal or ran out of steps
-        if (board.gotToGoal(r.position)) byFitness.enqueue(r)
+        if (board.gotToGoal(r.position)) {
+          byFitness.enqueue(r)
+          gotToGoalCounter += 1
+        }
         else if (!r.canMove) notToGoal = notToGoal.appended(r)
       })
     }
   }
 
   /**
-   * Sorts the unsuccessful robots by their final position
-   * relative to the goal
+   * Sorts the robots according to fitness
    */
   def sortFitness(): Unit = {
-    notToGoal = notToGoal.sortWith((r1: Robot, r2: Robot) => board.distanceToGoal(r1.position) < board.distanceToGoal(r2.position));
+    // Sorts robots that didn't get to goal
+    notToGoal = notToGoal.sortWith((r1: Robot, r2: Robot) => board.distanceToGoal(r1.position) < board.distanceToGoal(r2.position))
+
+    //Adds each of the robots that didn't got to the goal to the fitness queue
+    notToGoal.foreach(r => byFitness.enqueue(r))
   }
 
   /**
@@ -69,9 +108,6 @@ class Walk (val famSize: Int, val start: Coordinate, val board: Board) {
    * structures with the results of the walk
    */
   def generationIn(): Unit = {
-    //Adds each of the robots that didn't got to the goal to the fitness queue
-    notToGoal.foreach(r => byFitness.enqueue(r))
-
     //Replaces old generation with a copy of themselves ready for a new walk
     family = byFitness.toArray.map(r => r.grow())
 
@@ -80,6 +116,9 @@ class Walk (val famSize: Int, val start: Coordinate, val board: Board) {
     family(famSize - 2).steps = mergeSteps(family(1).steps, family(2).steps)
     family(famSize - 3).steps = mergeSteps(family(2).steps, family(3).steps)
     family(famSize - 4).steps = mergeSteps(family(3).steps, family(0).steps)
+
+    family.foreach(r => r.restartValidSteps())
+    byFitness.clear()
   }
 
   /**
@@ -87,9 +126,11 @@ class Walk (val famSize: Int, val start: Coordinate, val board: Board) {
    * of the current generation's walk
    * @return A RoundData object containing the required info
    */
-//  def roundStatistics(): RoundData = {
-//
-//  }
+  def calculateRoundStatistics(): Unit = {
+    //Find average steps in round
+    val stepsAvg = byFitness.map(robot => robot.validSteps).sum / famSize
+    roundStatistics(currentRound) = new RoundData(byFitness(0).has_visited, byFitness(0).steps, stepsAvg)
+  }
 
   /**
    * Generates a random list of steps for a 1st generation

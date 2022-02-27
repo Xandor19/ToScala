@@ -9,6 +9,7 @@ class Robot (initial: Coordinate, var steps: Array[String]) {
   private var stepCount = 0
   private var current = initial
   private var visited = new Array[Coordinate](steps.length)
+  private var validStepsInWalk = 0
 
   /**
    * Gives the total amount of steps given by
@@ -16,6 +17,11 @@ class Robot (initial: Coordinate, var steps: Array[String]) {
    * @return The steps count of the robot
    */
   def totalSteps: Int = stepCount
+
+  /**
+   * Returns the robot's valid steps count for the current walk
+   */
+  def validSteps: Int = validStepsInWalk
 
   /**
    * Gives the current position of the robot
@@ -63,9 +69,18 @@ class Robot (initial: Coordinate, var steps: Array[String]) {
     //Receives the robot's new coordinate after the step
     current = board.stepFrom(current, steps(stepCount))
 
+    //If step was valid, increase valid steps counter
+    //Could be done using reduce at the end of a round
+    if(current.isSame(visited(stepCount))) validStepsInWalk += 1
+
     //Robot's steps count is updated
     stepCount += 1
   }
+
+  /**
+   * Restart the robots validSteps counter
+   */
+  def restartValidSteps(): Unit = validStepsInWalk = 0
 
   /**
    * Returns a "growth" copy of this robot, namely,
