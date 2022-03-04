@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fe09eed0-aa1e-4bc9-a215-0eff58d0d562" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ToScala.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ToScala.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ToScala/META-INF/ToScala.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/logics/Board.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/logics/Board.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/logics/Main.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/logics/Main.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/logics/Robot.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/logics/Robot.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/logics/Walk.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/logics/Walk.scala" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectId" id="25sseuIYuekErQdZ5HiLET2qXuo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="logics.Main" />
+      <module name="ToScala" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="logics.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fe09eed0-aa1e-4bc9-a215-0eff58d0d562" name="Changes" comment="" />
+      <created>1646323738361</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1646323738361</updated>
+      <workItem from="1646418841827" duration="1811000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1876" height="419" key="GridCell.Tab.0.bottom" timestamp="1646420228911">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="419" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1646420228911" />
+    <state width="1876" height="419" key="GridCell.Tab.0.center" timestamp="1646420228909">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="419" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1646420228909" />
+    <state width="1876" height="419" key="GridCell.Tab.0.left" timestamp="1646420228908">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="419" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1646420228908" />
+    <state width="1876" height="419" key="GridCell.Tab.0.right" timestamp="1646420228910">
+      <screen x="0" y="0" width="1920" height="1080" />
+    </state>
+    <state width="1876" height="419" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1646420228910" />
+  </component>
+</project>

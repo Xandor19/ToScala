@@ -8,7 +8,7 @@ package logics
 class Robot (initial: Coordinate, var steps: Array[String]) {
   private var stepCount = 0
   private var current = initial
-  private var visited = new Array[Coordinate](steps.length)
+  private var visited = List.empty[Coordinate]
   private var validStepsInWalk = 0
 
   /**
@@ -50,7 +50,7 @@ class Robot (initial: Coordinate, var steps: Array[String]) {
    * @return An array of Coordinate objects with the
    *         visited coordinates
    */
-  def has_visited: Array[Coordinate] = visited
+  def has_visited: Array[Coordinate] = visited.toArray
 
   /**
    * Signals the robot to make his next step on a given board
@@ -64,7 +64,7 @@ class Robot (initial: Coordinate, var steps: Array[String]) {
    */
   def nextStep(board: Board): Unit = {
     //Marks the current tile as visited
-    visited(stepCount) = current
+    visited = visited.appended(current)
 
     //Receives the robot's new coordinate after the step
     current = board.stepFrom(current, steps(stepCount))
@@ -78,15 +78,15 @@ class Robot (initial: Coordinate, var steps: Array[String]) {
   }
 
   /**
-   * Restart the robots validSteps counter
-   */
-  def restartValidSteps(): Unit = validStepsInWalk = 0
-
-  /**
    * Returns a "growth" copy of this robot, namely,
-   * a robot with the same steps ready to a new walk
+   * a robot with the same steps ready for a new walk
    */
   def grow(): Robot = {
     new Robot(initial, steps)
+  }
+
+  def showRobotState(board: Board): String = {
+      String.format("Robot position: (" + current.x + ", " + current.y + ")" + ", Robot stepCount: " + stepCount + ", Robot can walk: " + canMove +
+      ", Robot dist to goal: " + board.distanceToGoal(current))
   }
 }

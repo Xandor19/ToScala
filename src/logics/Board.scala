@@ -101,7 +101,7 @@ class Board (val m: Int, val n: Int, val start: Coordinate, val goal: Coordinate
    * @return True if the coordinate is the goal
    *         False otherwise
    */
-  def gotToGoal(coordinate: Coordinate): Boolean = goal.isSame(coordinate)
+  def gotToGoal(coordinate: Coordinate): Boolean = distanceToGoal(coordinate) == 0
 
   /**
    * Calculates the distance between a given position and this board's goal
@@ -112,6 +112,10 @@ class Board (val m: Int, val n: Int, val start: Coordinate, val goal: Coordinate
    */
   def distanceToGoal(coordinate: Coordinate): Int = math.abs(coordinate.x - goal.x) + math.abs(coordinate.y - goal.y)
 
+  def restartRobotsPosition(): Unit = {
+    robotOccupiedCells.foreach(c => board(c.x)(c.y) = true)
+    robotOccupiedCells.clear()
+  }
   /**
    * Return amount of inactive cells
    */
